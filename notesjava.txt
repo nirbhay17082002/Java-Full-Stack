@@ -1,0 +1,2795 @@
+###########################################################  Difference between c,c++/cpp,java   ############################################################
+
+C 					C++/CPP					java
+int add(int,int)			class student			class student
+int main()				{				{
+{					.					public static void main(String[] args)
+.					.					{
+.					.					
+.					.
+}					}
+int add(int num1,int num2)		int main()				}
+{					{
+	return num1+num2;			student s1;		}	
+}					}
+
+##########################################################   Java virtual machine(JVM)  #####################################################################
+
+							     Java development kit(JDK)   ___
+											    |
+											    |---library
+							   Java runtime environment(JRE) ___|
+Compile java program
+javac  
+for name use FILENAME.java
+
+->in java file there would be more than one class.
+->in java file all class can not be public class, only class having main function that can be public.
+->in java file public class Should keep public static void main(String[] args) function.
+-> public class also should be the file name.
+->JVM doesn't take '.java' file it will take '.class' for execution.
+->During runtime who have to take those class name who have the main method class name.
+->java is platform independant(java can be run any operating system due to inpendant platform ).
+
+public static void main(String[] args){} ____
+public void main(){}			 ____|__in this only first one will be call by JVM and remaining one will be call by class or first one main function.
+public static int main(){}		 ____|
+
+#################################################################   JVM        #############################################################################
+class leader -> all class will be loaded in JVM, during run the class its hold by JVM.
+     ↆ
+Byte code verifier -> verify the byte code of your all classes.
+	|
+	|__JIT complier(it will gather the code which is required to execute frequently)
+	|       ↆ
+	|    again compile code and check with byte code when it is true then your program is secure (again compile code == Byte code)
+								ↆↆ
+				if its true then its come to interpreter which compile the code line by line.
+								ↆↆ
+					after this interpreter send the code to CPU for execution.
+
+###############################################################   Structure of java program   ###############################################################
+ 
+								      javafile.java
+____________________________________________________________________________________________________________________________________________________________
+|		package file; //it should be small/Lowercase.												    |
+|		import<library/package>;//lower keyword.												    |
+|		<access specifier> class    <name of class> ->Upper camel Case like Student, StudentDetails						    |
+|                 ↆ                    ↆ          				    -	     -	    -							    |
+|	        //it can	Keyword/lowercase				    ↆ	     ↆ	    ↆ							    |
+|	        //be      							  Upper	   Upper  Upper							    |
+|		//public																    |
+|		//private																    |	
+|		//protected																    |
+|		//default																    |
+|	     //->variables																    |
+|		<access specifier><datatypes><variable names>;												    |
+|		constructor()//public/default														    |
+|		    ↆ          		               													    |
+|    //same name of the current class						         								    |
+|    // constructor with argument/parameter														    |
+|       Student()	|      Student(int a)														    |
+|			|																    |
+|			|																    |
+|			|																    |
+|			|																    |
+|	General method/function																    |
+|		main()																	    |
+|		{																	    |
+|																			    |
+|		}												    					    |
+| __________________________________________________________________________________________________________________________________________________________|
+
+
+##################################################################    Variables    #########################################################################
+
+->Name of memory where, we can store the value.
+
+#############################################################     Types of variable in java  ###############################################################
+1. Local Variable
+2. Instance Variable
+3. Static Variable
+______________________________________________________________________________________________________________________________________________________________
+
+1.Local Variable -> a local variable is a variable that is declared within a block of code, such as a method, constructor, or a block of code inside a method.
+  It is defined with a specific data type and can only be accessed within the scope of the block where it is declared.
+Example..
+public class LocalVariableExample
+{
+	public void msg()//msg(String name) this is also a local variable
+	{
+		int num=100;//Local variable
+		System.out.println("num:"+num);
+		System.out.println("Name "+name);
+	}
+	public static void main(String[] args)
+	{
+		LocalVariableExample lve = new LocalVariableExample();
+			lve.msg("Nirbhay");// method msg in class LocalVariableExample cannot be applied to given types;
+                        			//lve.msg("Nirbhay");
+                           				^
+  						//required: no arguments
+  						//found: String
+  						//reason: actual and formal argument lists differ in length
+			num=200;//there is error like cannot find the symbol num=200; 
+			//symbol: variable num,location: class LocalVariableExample
+			//num=200; not accessible because local variable
+	}
+}
+_______________________________________________________________________________________________________________
+
+2.Instance variable -> n instance variable, also known as a member variable or an object-level variable,
+  is a variable declared within a class but outside any method or constructor.
+  Unlike local variables, instance variables belong to a specific instance of a class and can be
+  accessed and modified by any method or constructor within that instance.
+
+EXAMPLE..
+public class InstanceVariableExample
+{
+	String college;//Instance variable
+	int num1;//instance variable
+	public void fun1()
+	{
+		college="LPU";
+		System.out.println("College :"+college);
+	}
+	public void fun2()
+	{
+		System.out.println("College :"+college);
+	}
+	public static void main(String[] args)
+	{
+		System.out.println("College :"+college);//ERROR-> non-static can't access from static context
+		InstanceVariableExample ive=new InstanceVariableExample();
+		ive.fun1();
+		ive.fun2();
+	}
+}
+___________________________________________________________________________________________________________________________________
+
+***Keypoit[instance variable take more memory but static variable takes less memory company wants static one due to less memory uses.]
+
+3.Static varriable -> which variable is declared with static keyword that is static variable. It can be accessible in both inside the block
+  and outside the block. Its class level member, so the memory and value will be initialized during the loading class. It remains until program executing.
+  Its accessible from non-static and static context both. Always it keeps updated value.
+
+EXAMPLE..
+public class StaticVariableExample
+{
+	static int num;
+	public void fun1()
+	{
+		num=100;
+		System.out.println("Number :"+num);
+	}
+	public static void main(String[] args)
+	{
+		System.out.println("Number in main() :"+num);
+		StaticVariableExample sve=new StaticVariableExample();
+		sve.fun1();
+	}
+}
+
+
+JVM->class leader-> '.class' file ---->memory will be allocated
+						ↆ
+					i.  Class memory area ->class an their own members -> static context
+												ↆ
+											    a)static class
+											    b)Static variable
+											    c)static function
+					ii. memory for object
+					iii.memory for variables.
+
+Static Counter example 1:-
+public class StaticCounter
+{
+	static int count=0;
+	public StaticCounter()
+	{
+		count++;
+		System.out.println(count);
+	}
+	
+	public static void main(String[] args)
+	{
+		StaticCounter st=new StaticCounter();
+	}
+}
+output: 1
+	2
+	2
+
+Static Counter example 2:-
+public class StaticCounter
+{
+	static int count=0;
+	public StaticCounter()
+	{
+		count++;
+	}
+	
+	public static void main(String[] args)
+	{
+		StaticCounter st=new StaticCounter();
+		StaticCounter st1=new StaticCounter();
+		System.out.println(count);
+	}
+}
+output: 3
+
+##############################################################################  Datatype  #################################################################################
+
+There is two type of datatype:-
+i)  primitive datatype.
+		ↆ
+	There are 8 primitive data types
+		1. byte
+		2. short
+		3. int
+		4. long
+		5. float
+		6. double
+		7. boolean
+		8. char
+ii) non-primitive datatype.
+	In that not fixed data type
+	there are some example
+	1.All Wrapper class - Its represent the primitive datatype.
+		a. Integer - 4 bytes
+		b. Float - 4 bytes
+		c. Double - 8 bytes
+		d. Boolean - 1 bytes
+		e. Short -2 bytes
+		f. Byte -1 bytes
+		g. Char/Character - 2 bytes
+		h. Long - 8 bytes
+	2.String
+	3.All class types
+______________________________________________________________________________________________________________________________________________________
+
+EXAMPLE of Primitive datatype:-
+public class PrimitiveDataTypesExample
+{
+	public static void main(String[] args)
+	{
+		short s=100;
+		System.out.println("Size of Short data type :"+(Short.SIZE/8)+" bytes");//for get the size of datatype
+		System.out.println("short s:"+s);
+		
+		//byte b=9111;//error: incompatible types: possible lossy conversion from int to byte
+		byte b=10;
+		System.out.println("Size of Byte data type :"+(Byte.SIZE/8)+" bytes");//for get the size of datatype
+		System.out.println("Byte b:"+b);
+		
+		int i=10;
+		System.out.println("Size of Interger data type :"+(Integer.SIZE/8)+" bytes");//for get the size of datatype
+		System.out.println("Integer i:"+i);
+		
+		long l=8999;
+		System.out.println("Size of Long data type :"+(Long.SIZE/8)+" bytes");//for get the size of datatype
+		System.out.println("Long l:"+l);
+		
+		//float f=189.9;// error: incompatible types: possible lossy conversion from double to float
+		float f=18999.9f;//in float we will use f in the last
+		System.out.println("Size of Float data type :"+(Float.SIZE/8)+" bytes");//for get the size of datatype
+		System.out.println("Float f:"+f);
+
+		double d=1899.45;
+		System.out.println("Size of Double data type :"+(Double.SIZE/8)+" bytes");//for get the size of datatype
+		System.out.println("Double d:"+d);
+		
+		char ch='A';
+		System.out.println("Size of Character data type :"+(Character.SIZE/8)+" bytes");//for get the size of datatype
+		System.out.println("Char ch:"+ch);
+		
+		boolean bool=true;
+		//System.out.println("Size of Boolean data type :"+(Boolean.SIZE/8)+" bytes");//for get the size of datatype // error: cannot find symbol
+		System.out.println("Boolean bool:"+bool);
+	}
+}
+________________________________________________________________________________________________________________________________________________________
+
+Tricky Questions:-
+
+public class TrickyQuestionOnPrimitiveDataType
+{
+	public static void main(String[] args)
+	{
+		byte b1=10;
+		byte b2=20;
+		//byte b3=b1+b2;//error
+		byte b3=(byte)(b1+b2);
+		System.out.println("Result of b1+b2 :"+b3);
+		
+		float f1=23.45f;
+		float f2=20.30f;
+		float f3=f1+f2;
+		System.out.println("Result of f1+f2 :"+f3);
+
+		float num=0.7f;
+		if(num==0.7)
+		System.out.println("Equal");
+		else
+		System.out.println("Not Equal");
+		if(num>=0.7)
+		System.out.println("Equal");
+		else
+		System.out.println("Not Equal");
+
+		char alpha='A';
+		//alpha=alpha+1;//error
+		alpha=(char)(alpha+1);
+		System.out.println(alpha);
+	}
+}
+Output: 
+Result of b1+b2 :30
+Result of f1+f2 :43.75
+Not Equal
+Not Equal
+B
+
+########################################################################   OPERATORS    ####################################################################
+1.Arithmetic operator
+2.Logical operator
+3.unary operator
+4.bitwise operator
+5.assignment operator
+6.ternary operator
+7.relational operator
+8.short hand assignment operator
+9.misc operator
+_________________________________________________________________
+1. Arithmetic operator
+	ↆ
++,-,/,*,%
+
+Example:-
+
+public class ArithmeticOperatorExample
+{
+	public static void main(String[]args)
+	{
+		long mbno=918543051584L;
+		System.out.println("Mobile No. :"+mbno);
+
+		long countrycode=mbno/10000000000L;
+		mbno=mbno%10000000000L;
+		System.out.println("countrycode :"+countrycode);
+		System.out.println("Mobile Number :"+mbno);
+	}
+}
+_____________________________________________________________________________________________________________________________________________________
+2.Unary Operators:
+	ↆ
+--,++,-,~,!
+Example:-
+public class UnaryOperatorExample
+{
+	public static void main(String[] args)
+	{
+		int x=10;
+		x++;//Unary Operator
+		x=~x;//x=x-2x-1
+		int y=-10;
+		y--;
+		y=~y;//y=y+2y+1
+		System.out.println("Value of x :"+x);
+		System.out.println("Value of y :"+y);
+	}
+}
+Output: -12
+	10
+__________________________________________________________________
+3.Bitwise Operator
+	ↆ
+&,|,<<,>>,^(XOR) etc
+public class BitwiseOperatorExample
+{
+	public static void main(String[] args)
+	{
+		
+		System.out.println("Value of 5|6:"+(5|6));
+		System.out.println("Value of 5&6:"+(5&6));
+		System.out.println("Value of 5>>6:"+(5>>6));
+		System.out.println("Value of 5<<6:"+(5<<6));
+	}
+}
+
+Solution  5<<6// this is left shift
+       5   <   <   6
+       ↆ   ↆ	   ↆ
+       5 * 2   ^   6
+for right shift(>>)relplace this * with this /
+___________________________
+Question:- Wap to add two integer without using + operator or unary operator
+Solution:-
+public class AdditionProgramWithoutArithmaticOperator
+{
+	public int gerResult(int num1,int num2)
+	{
+		while(num2!=0
+		{
+			int carry=(num1&num2);
+			num1=(num1^num2);
+			num2=(carry<<1);
+		}
+		return num1;
+	}
+	public static void main(String[] args)
+	{
+		AdditionProgramWithoutArithmaticOperator apwao= new AdditionProgramWithoutArithmaticOperator();
+		int res=apwao.getResult(7,5);
+		System.out.println("The Addition of Two numbers :"+res);
+	}
+}
+________________________
+For Subtraction
+public class SubtractionProgramWithoutArithmaticOperator
+{
+	public int getResult(int num1,int num2)
+	{
+		while(num2!=0)
+		{
+			int carry=(~num1&num2);
+			num1=(num1^num2);
+			num2=(carry<<1);
+		}
+		return num1;
+	}
+	public static void main(String[] args)
+	{
+		SubtractionProgramWithoutArithmaticOperator apwao= new SubtractionProgramWithoutArithmaticOperator();
+		int res=apwao.getResult(5,7);
+		System.out.println("The Addition of Two numbers :"+res);
+	}
+}
+____________________________________________________________________________________________________________________
+4. Ternary Operator:-Its used for substuting
+	ↆ
+ (< or >) ? true:false
+Example :-
+	String msg=(5>4)? "five is greater than four":"five is smaller than four";
+program example:-
+public class LargestAmongThreeNumber
+{
+	public static void main(String[] args)
+	{
+		int num1=7;
+		int num2=5;
+		int num3=9;
+		num1=(num1>num2)?num1:num2;
+		num1=(num1>num3)?num1:num3;
+		System.out.println("Largest number among three is :"+num1);
+	}
+}
+_______________________________________________________________________________________________________________
+5. Short hand assignment operator
+		ↆ
+    +=,-=,/=,*=,%= etc
+Example:-
+int marksoforganicchemistry=10;
+marksoforganicchemistry=marksoforganicchemistry+30;
+	ↆ
+    Short form
+	ↆ
+marksoforganicchemistry+=20;
+_________________________________________________________________________________________________________________
+6.control statement
+	ↆ
+if,if..else,if..else if... so on.
+break,continue
+
+example:-
+public class IfElseExample
+{
+	public static void main(String[] args)
+	{
+		int num=5;
+		if(num%2==0);//';'this sign close the if condition thats why Even will print always;
+		System.out.println("Even");
+	}
+}
+Output: Even
+_____________________________________________
+Switch Example:-
+public class SwitchExample
+{
+	public static void main(String[] args)
+	{
+		char grade='B';
+		switch(grade)
+		{	default:System.out.println("invalid");
+			case 'A':System.out.println("A");
+			case 'B':System.out.println("B");
+			case 'C':System.out.println("C");
+			case 'D':System.out.println("D");
+			//default:System.out.println("invalid");
+		}
+	}
+}
+Output: B
+	C
+	D
+
+public class SwitchExample
+{
+	public static void main(String[] args)
+	{
+		char grade='B';
+		switch(grade)
+		{	//default:System.out.println("invalid");
+			case 'A':System.out.println("A");
+			case 'B':System.out.println("B");
+			case 'C':System.out.println("C");
+			case 'D':System.out.println("D");
+			default:System.out.println("invalid");
+		}
+	}
+}
+Output: B
+	C
+	D
+	invalid
+_______________________________________________________________________________________
+LOOP:-
+1.while
+2.do..while
+3.for
+4.foreach
+5.labelled for loop
+
+labelled for loop Example:-
+public class LabelledForLoopExample
+{
+	public static void main(String[] args)
+	{
+		outer:
+		for(int i=0;i<5;i++)
+		{
+			System.out.println("I :"+i);
+			inner:
+			for(int j=0;j<5;j++)
+			{
+				System.out.println("J :"+j);
+				if(i==2&&j==2)
+				{
+					break outer;
+				}
+			}
+		}
+	}
+}
+____________________________________________________________________________________________
+Scanner Class:- Its a class, which is used to take input from users.
+		It has following method to get respective types of data.
+		1.nextInt();
+		2.nextFloat();
+		3.nextDouble();
+		4.next();
+		5.nextLine();
+		6.charAt();
+		7.nextChar();
+		8.nextLong();
+		etc..
+___________________________________________________________________________________________________
+next();
+
+#################################################################################         ARRAY           ##################################################################################
+Declaration of an array:
+int[] arr;
+int arr[];
+int []arr;
+For 2D:-
+int[][] arr;
+int arr[][];
+int [][]arr;
+
+Declaration with initialization:
+int[] arr=new int[5];
+for 2d:-
+int[][] arr=new int[n][n];
+Assign value to Array:
+arr[0]=5;
+arr[1]=10;
+arr[2]=2;
+arr[3]=4;
+arr[4]=100;
+For 2D:-
+arr[0][0]=5;
+arr[0][1]=10;
+arr[1][0]=2;
+arr[1][1]=4;
+
+Printing an array:
+System.out.println(arr[0]);
+System.out.println(arr[1]);
+System.out.println(arr[2]);
+System.out.println(arr[3]);
+System.out.println(arr[4]);
+For 2D:-
+System.out.println(arr[0][0]);
+System.out.println(arr[0][1]);
+System.out.println(arr[1][0]);
+System.out.println(arr[1][1]);
+
+Question:-WAP to take array with 5 size, assign value to all index and print the array value.
+Solution:-
+public class ArrayExample
+{
+	public static void main(String[] args)
+	{
+		int[] arr=new int[5];
+		arr[0]=5;
+		arr[1]=10;
+		arr[2]=2;
+		arr[3]=4;
+		arr[4]=100;
+		for(int i=0;i<5;i++)
+		{
+			System.out.print(arr[i]+" ");
+		}
+	}
+}
+2D Array example:-
+import java.util.*;
+public class Array2DExample
+{
+	public static void main(String[] args)
+	{
+		Scanner input=new Scanner(System.in);
+		int[][] arr=new int[4][4];
+		for(int i=0;i<3;i++)
+		{
+			for(int j=0;j<3;j++)
+			{
+				System.out.println("Enter the number :");
+				arr[i][j]=input.nextInt();
+			}
+		}
+		for(int i=0;i<3;i++)
+		{
+			for(int j=0;j<3;j++)
+			{
+				System.out.print(arr[i][j]+" ");
+			}
+			System.out.println();
+		}
+	}
+}
+____________________________________________________________________________________
+String[] arr={"Mansi","Nirbhay","Sarita","Abhay","Jitendra"};
+for(String str:arr)
+{
+	System.out.println(str);
+}
+Question:- WAP to insert 5 element in an array. print the sum of odd index value and even index value.
+solution:-
+import java.util.*;
+public class EvenOddSum2DArray
+{
+	public static void main(String[] args)
+	{
+		Scanner input=new Scanner(System.in);
+		System.out.println("Enter the size of row :");
+		int r=input.nextInt();
+		System.out.println("Enter the size of coloumn :");
+		int c=input.nextInt();
+		int[][] arr=new int[r][c];
+		for(int i=0;i<r;i++)
+		{
+			for(int j=0;j<c;j++)
+			{
+				System.out.println("Enter the number :");
+				arr[i][j]=input.nextInt();
+			}
+		}
+		int sume=0,sumo=0;
+		for(int i=0;i<r;i++)
+		{
+			for(int j=0;j<c;j++)
+			{
+				if((i+j)%2==0)
+				sume+=arr[i][j];
+				else
+				sumo+=arr[i][j];
+			}
+		}
+		System.out.println("sum of even index value :"+sume);
+		System.out.println("sum of odd index value :"+sumo);
+	}
+}
+
+#################################################################     String        ####################################################################
+String s1 =new String("Java");
+How many object are created here?
+Ans: Two Object One inside String constant pool memory and Another inside heap memory but outside the String 
+Example:-
+public class StringExample
+{
+	public static void main(String[] args)
+	{
+		String s1="Java";
+		String s2=new String("Hello");
+		String s3="Java";
+		String s4=new String("hello");
+		
+		System.out.println("S1 :"+s1+" :"+s1.hashCode());
+		System.out.println("S2 :"+s2+" :"+s2.hashCode());
+		System.out.println("S3 :"+s3+" :"+s3.hashCode());
+		System.out.println("S4 :"+s4+" :"+s4.hashCode());
+
+		s3="Pava";
+		System.out.println("S3 :"+s3+" :"+s3.hashCode());
+		
+		//concatination
+		System.out.println(s2.concat(s1).hashCode());
+	}
+}
+______________________________________________________________
+                         use of charAt();
+
+String st="Hello";
+charAt(index);
+char ch=st.charAt(0);//first char
+ch=st.charAt(st.length-1);
+
+CONVERT CHAR ARRAY TO STRING:-
+char[] ch={'a','p','p','l','e'};
+String st=ch.toString();
+
+CONVERT STRING TO CHAR ARRAY:-
+String st="HelloJava";
+char[] ch=st.tocharArray();
+
+CONVERT STRING SENTENCE TO CHAR ARRAY:-
+String sentence ="Hello, I am Java";
+String[] words=sentence.split(" ");
+
+EXAMPLE:-
+import java.util.*;
+public class StringMethod
+{
+	public static void main(String[] args)
+	{
+		String s1="Hello";
+		char Firstchar=s1.charAt(0);
+		System.out.println("First character of Hello :"+Firstchar);
+		
+		char lastChar=s1.charAt(s1.length()-1);
+		System.out.println("Last Character of Hello :"+lastChar);
+		
+		char[] ch=s1.toCharArray();
+		System.out.println("Printing char array :");
+		for(int i=0;i<ch.length;i++)
+		{
+			System.out.println(" "+ch[i]);
+		}
+		
+		char[] chArray={'A','P','P','L','E'};
+		String word=new String(chArray);
+		System.out.println("\nPrinting word of char array :"+word);
+		
+		String sent="Hello I am good";
+		String[] words=sent.split(" ");
+		System.out.println("Print words :");
+		for(String w:words)
+		{
+			System.out.println(w);
+		}
+	}
+}
+____________________________________________
+Java String compare:-
+There are three ways to compare String in java:
+
+1.By Using equals() Method//compare based onthe content and it is a case sensitive
+//if you want to ignore the case sensitive then us equalsIgnoreCase()
+2.By Using == Operator//compare boject based on address
+3.By Using compareTo() Method// its return the integer value 1,0,-1 if s1==s2 it return 0 if s1>s2 it return 1 if s1<s2 it return -1
+
+EXAMPLE:-
+public class StringCompareExample
+{
+	public static void main(String[] args)
+	{
+		String s1="Java";
+		String s2="java";
+		String s3=new String("Java");
+		
+		System.out.println("s1==s3 :"+(s1==s3));
+		System.out.println("s1==s2 :"+(s1==s2));
+		
+		System.out.println("s1.equals(s3) :"+(s1.equals(s3)));
+		System.out.println("s1.equalsIgnoreCase(s2) :"+(s1.equalsIgnoreCase(s2)));
+
+		System.out.println("s1.compareTo(s2) :"+(s1.compareTo(s2)));
+		String a="A";
+		String b="B";
+		String c="C";
+		System.out.println("a.compareTo(b) :"+(a.compareTo(b)));
+		System.out.println("a.compareTo(c) :"+(a.compareTo(c)));
+	}
+}
+____________________________________________________
+Java String intern()
+The Java String class intern() method returns the interned string. It returns the canonical representation of string.
+
+It can be used to return string from memory if it is created by a new keyword. It creates an exact copy of the heap string object inthe String Constant Pool.
+ String s=new String("Hello");
+String s1="Hello";
+String s2=s1.intern();
+EXAMPLE:-
+public class StringInternMethod
+{
+	public static void main(String[] args)
+	{
+		String s=new String("Hello");
+		String s1="Hello";
+		String s2=s.intern();//fetch data from SCP(String constant pool)
+		
+		System.out.println("s1==s2 :"+(s1==s2));
+	}
+}
+
+Capitalization of first letter of every word from a sentence:-
+import java.util.*;
+public class FirstLetterCapital
+{
+	public static void main(String[] args)
+	{
+		Scanner input=new Scanner(System.in);
+		System.out.println("Enter the sentence");
+		String str=input.nextLine();
+		String[] words=str.split(" ");
+		for(int w=0;w<words.length;w++)
+		{
+			words[w]=words[w].substring(0,1).toUpperCase() + words[w].substring(1);
+			System.out.print(words[w]+" ");
+		}
+	}
+}
+
+Another method:-
+import java.util.*;
+import java.util.stream.*;
+public class CapitalizEachWords
+{
+	public static String getCapitalized(String str)
+	{
+		return Arrays.stream(str.split("\\s")).map(ele->ele.substring(0,1).toUpperCase()+ele.substring(1)).collect(Collectors.joining(" "));
+	}
+	
+	public static void main(String[] args)
+	{
+		Scanner input=new Scanner(System.in);
+		
+		System.out.println("Enter sentence :");
+		String sentence=input.nextLine();
+
+		String s1=getCapitalized(sentence);
+		System.out.println(s1);
+	}
+}
+#######################################################################      Java StringBuffer Class    ################################################################################
+->Java StringBuffer class is used to create mutable (modifiable) String objects. The StringBuffer class in java is the same as String class except it is mutable i.e. it can be changed.
+->Java StringBuffer class is thread-safe i.e. multiple thread cannot access it simultaneously. So it is safe and will result in an order.
+_______________________________________
+Important methods of StringBuffer class
+_______________________________________
+1.append(String s);
+  It is used to append the specified string with this string. The append() method is overloaded like append(char),append(boolean),append(int),append(float),append(double) etc.
+2.insert(int offset,String s):
+  It is used to insert the specified string with this string at the specified position. The insert() method is overloaded like insert(int,char),insert(int,boolean),insert(int,int),
+  insert(int,float),insert(int,double) etc.
+3.replace(int startIndex, int endIndex, String str):
+It is used to replace the string from specified startIndex and endIndex.
+
+4.delete(int startIndex, int endIndex):
+It is used to delete the string from specified startIndex and endIndex.
+
+4.reverse():
+is used to reverse the string.
+
+5.public String	substring(int beginIndex):
+It is used to return the substring from the specified beginIndex.
+
+6.public String	substring(int beginIndex, int endIndex)	:
+It is used to return the substring from the specified beginIndex and endIndex.
+  
+Example:-
+public class StringBuffersExamples
+{
+	public static void main(String[] args)
+	{
+		StringBuffer buffer=new StringBuffer();
+		
+		//append()
+		buffer.append("Mansi ");
+		buffer.append("Nirbhay ");
+		buffer.append("Singh ");
+		System.out.println(buffer);
+		
+		//insert()
+		buffer.insert(20,"lovely couple ");
+		System.out.println(buffer);
+		
+		int len=buffer.length();
+		System.out.println("Length of buffer :"+len);
+
+		buffer.insert(len,"forever ");
+		System.out.println(buffer);
+		len=buffer.length();
+		buffer.insert(len,"and ever ");
+		System.out.println(buffer);
+
+		buffer.reverse();
+		System.out.println(buffer);
+	}
+}
+____________________________________
+Anagram:-
+listen=silent
+-> length should be same of both word.
+->There should not be duplicates characters in both string
+->Then sort both the world in acc or dec order then check if both are same then it is anagram.
+#########################################################################################   StringBuilders   ##########################################################################
+Java StringBuilder class is used to create mutable (modifiable) String. The Java StringBuilder class is same as StringBuffer class except that it is non-synchronized. It is available since JDK 1.5.
+
+Important methods of StringBuilder class
+------------------------------------------------------
+1.public StringBuilder append(String s):
+It is used to append the specified string with this string. The append() method is overloaded like append(char), append(boolean), append(int), append(float), append(double) etc.
+
+2.public StringBuilder insert(int offset, String s):
+It is used to insert the specified string with this string at the specified position. The insert() method is overloaded like insert(int, char), insert(int, boolean), insert(int, int), insert(int, float), insert(int, double) etc.
+
+3.public StringBuilder replace(int startIndex, int endIndex, String str):
+It is used to replace the string from specified startIndex and endIndex.
+
+4.public StringBuilder delete(int startIndex, int endIndex):
+It is used to delete the string from specified startIndex and endIndex.
+
+5.public StringBuilder reverse():
+It is used to reverse the string.
+
+6.public int length():
+It is used to return the length of the string i.e. total number of characters.
+
+7.public String substring(int beginIndex):
+It is used to return the substring from the specified beginIndex.
+
+8.public String substring(int beginIndex, int endIndex):
+It is used to return the substring from the specified beginIndex and endIndex.
+
+EXAMPLE:-
+public class StringBuilderExample
+{
+	public static void main(String[] args)
+	{
+		StringBuilder sb=new StringBuilder();
+		sb.append("kya ");
+		sb.append("ho raha ");
+		sb.append("h re pagal ");
+		System.out.println(sb);
+
+		String w=String.valueOf(sb);
+		System.out.println(w);
+
+		String words=sb.toString();
+		System.out.println(words);
+
+		sb.reverse();
+		System.out.println(sb);
+
+		sb.reverse();
+		System.out.println(sb);
+
+		sb.delete(0,12);
+		System.out.println(sb);
+
+		System.out.println(words.contains("kal"));
+		System.out.println(words.contains("raha"));
+
+		int index=sb.indexOf("raha");
+		System.out.println(words);
+		System.out.println(index);
+	}
+}
+
+==================================================================================================
+			Difference between String and StringBuffer
+==================================================================================================
+	String					StringBuffer
+==========================================	==================================================
+
+1)The String class is immutable.		The StringBuffer class is mutable.
+2)String is slow and consumes more memory 
+when we concatenate too many strings because 
+every time it creates new instance.		StringBuffer is fast and consumes less memory when 
+						we concatenate t strings.
+3)String class overrides the equals() method 
+of Object class. So you can compare the 
+contents of two strings by equals() method.	StringBuffer class doesn't override the equals() 
+						method of Object class.
+4)String class is slower while performing 
+concatenation operation.			StringBuffer class is faster while performing 
+						concatenation operation.
+5)String class uses String constant pool.	StringBuffer uses Heap memory
+
+___________________________________________________________
+difference B/W String,StringBuffer&StringBuilder by the program:-
+public class StringAndStringBufferPerformanceExample
+{
+	public static String getString()
+	{
+		String str="Java ";
+		for(int i=0;i<10000;i++)
+		{
+			str=str+"Program";
+		}
+		return str;
+	}
+
+	public static String getBuffer()
+	{
+		StringBuffer str=new StringBuffer("Java ");
+		for(int i=0;i<10000;i++)
+		{
+			str.append("Program");
+		}
+		return str.toString();
+	}
+
+	public static String getBuilder()
+	{
+		StringBuilder str=new StringBuilder("Java ");
+		for(int i=0;i<10000;i++)
+		{
+			str.append("Program");
+		}
+		return str.toString();
+	}
+
+	public static void main (String[] args)
+	{
+		long startTime=System.currentTimeMillis();
+		String strString=getString();
+		System.out.println("Time taken by String :"+(System.currentTimeMillis()-startTime)+" ms.");
+		
+		startTime=System.currentTimeMillis();
+		String strBuffer=getBuffer();
+		System.out.println("Time taken by StringBuffer :"+(System.currentTimeMillis()-startTime)+" ms.");
+		
+		startTime=System.currentTimeMillis();
+		String strBuilder=getBuilder();
+		System.out.println("Time taken by StringBuilder :"+(System.currentTimeMillis()-startTime)+" ms.");
+	}
+}
+
+===================================================================================================
+String and StringBuffer HashCode Test
+--------------------------------------
+As we can see in the program given below, String returns new hashcode while performing concatenation but the StringBuffer class returns same hashcode.
+
+InstanceTest.java
+
+public class InstanceTest{  
+    public static void main(String args[]){  
+        System.out.println("Hashcode test of String:");  
+        String str="java";  
+        System.out.println(str.hashCode());  
+        str=str+"Program";  
+        System.out.println(str.hashCode());  
+   
+        System.out.println("Hashcode test of StringBuffer:");  
+        StringBuffer sb=new StringBuffer("java");  
+        System.out.println(sb.hashCode());  
+        sb.append("Program");  
+        System.out.println(sb.hashCode());  
+    }  
+}  
+
+Output:
+Hashcode test of String:
+3254818
+229541438
+
+Hashcode test of StringBuffer:
+118352462
+118352462
+
+==================================================================================================
+Difference between StringBuffer and StringBuilder
+==================================================================================================
+A list of differences between StringBuffer and StringBuilder is given below:
+--------------------------------------------------------------------------------------------------
+	StringBuffer				StringBuilder
+===========================================	==================================================
+1)StringBuffer is synchronized i.e. 
+thread safe.It means two threads can't call 
+the methods of StringBuffer simultaneously.	StringBuilder is non-synchronized i.e. not thread  
+						safe. It means two threads can call the methods of 						StringBuilder simultaneously.
+
+2)StringBuffer is less efficient 
+than StringBuilder.				StringBuilder is more efficient than StringBuffer.
+
+3)StringBuffer was introduced in Java 1.0	StringBuilder was introduced in Java 1.5
+
+==================================================================================================
+Performance Test of StringBuffer and StringBuilder
+-------------------------------------------------------------------------------------
+Let's see the code to check the performance of StringBuffer and StringBuilder classes.
+-----------------------------------------------------------------------------------------
+//Java Program to demonstrate the performance of StringBuffer and StringBuilder classes.  
+public class ConcatTest{  
+    public static void main(String[] args){  
+        long startTime = System.currentTimeMillis();  
+        StringBuffer sb = new StringBuffer("Java");  
+        for (int i=0; i<10000; i++){  
+            sb.append("Program");  
+        }  
+        System.out.println("Time taken by StringBuffer: " + (System.currentTimeMillis() - startTime) + "ms");  
+        startTime = System.currentTimeMillis();  
+        StringBuilder sb2 = new StringBuilder("Java");  
+        for (int i=0; i<10000; i++){  
+            sb2.append("Program");  
+        }  
+        System.out.println("Time taken by StringBuilder: " + (System.currentTimeMillis() - startTime) + "ms");  
+    }  
+}  
+
+
+==================================================================================================
+Output:
+
+Time taken by StringBuffer: 16ms
+Time taken by StringBuilder: 0ms
+
+Example2:
+public class StringAndStringBufferPerformanceExample
+{
+	public static String getString()
+	{
+		String str="Java ";
+		for(int i=0;i<10000;i++)
+		{
+			str=str+"Program";
+		}
+		return str;
+	}
+	public static String getBuffer()
+	{
+		StringBuffer str=new StringBuffer("Java ");
+		for(int i=0;i<10000;i++)
+		{
+			str.append("Program");
+		}
+		return str.toString();
+	}
+	public static String getBuilder()
+	{
+		StringBuilder str=new StringBuilder("Java ");
+		for(int i=0;i<10000;i++)
+		{
+			str.append("Program");
+		}
+		return str.toString();
+	}
+
+
+	
+	public static void main(String[] args)
+	{
+		long startTime=System.currentTimeMillis();
+		String strString=getString();
+	System.out.println("Time taken by String :"+(System.currentTimeMillis()-startTime)+" ms.");
+
+		startTime=System.currentTimeMillis();
+		String strBuffer=getBuffer();
+System.out.println("Time taken by StringBuffer :"+(System.currentTimeMillis()-startTime)+" ms.");
+	
+		startTime=System.currentTimeMillis();
+		String strBuilder=getBuilder();
+System.out.println("Time taken by StringBuilder :"+(System.currentTimeMillis()-startTime)+" ms.");
+	
+		
+	}
+}
+
+=================================================================================================
+How to create Immutable class?
+------------------------------
+There are many immutable classes like String, Boolean, Byte, Short, Integer, Long, Float, Double etc. In short, all the wrapper classes and String class is immutable. We can also create immutable class by creating final class that have final data members as the example given below:
+_________________________________________________________________________
+Immutable class EXAMPLE:-
+final class ImmutableExample
+{
+	final String adharNo;
+	public ImmutableExample(String adharNo)
+	{
+		this.adharNo=adharNo;
+	}
+	
+	public String getAdhar()
+	{
+		return adharNo;
+	}
+}
+public class CustomizeImmutableExample
+{
+	public static void main(String[] args)
+	{
+		ImmutableExample im=new ImmutableExample("233442342342344");
+		String adharno=im.getAdhar();
+		System.out.println("Adhar Number:"+adharno);
+	}
+}
+
+###################################################################################   Method in Java    ##########################################################
+
+In general, a method is a way to perform some task. Similarly, the method in Java is a collection of instructions that performs a specific task. It provides the reusability of code. We can also easily modify code using methods. In this section, we will learn what is a method in Java, types of methods, method declaration, and how to call a method in Java.
+
+What is a method in Java?
+----------------------------------------
+A method is a block of code or collection of statements or a set of code grouped together to perform a certain task or operation. It is used to achieve the reusability of code. We write a method once and use it many times. We do not require to write code again and again. It also provides the easy modification and readability of code, just by adding or removing a chunk of code. The method is executed only when we call or invoke it.
+
+The most important method in Java is the main() method.
+
+Method Declaration
+-------------------------------------------------------------------
+The method declaration provides information about method attributes, such as visibility, return-type, name, and arguments. It has six components that are known as method header,
+
+Method Signature: Every method has a method signature. It is a part of the method declaration. 
+It includes the method name and parameter list.
+
+* Access Specifier: Access specifier or modifier is the access type of the method. It specifies the   
+  visibility of the method. 
+
+	Java provides four types of access specifier:
+	------------------------------------------------------------------------
+	1.	Public: The method is accessible by all classes when we use public specifier in our 		application.
+
+	2.	Private: When we use a private access specifier, the method is accessible only in 		the classes in which it is defined.
+
+	3.	Protected: When we use protected access specifier, the method is accessible within 		the same package or subclasses in a different package.
+
+	4.	Default: When we do not use any access specifier in the method declaration, Java 		uses default access specifier by default. It is visible only from the same package 		only.
+
+* Return Type: Return type is a data type that the method returns. It may have a primitive data  
+  type, object, collection, void, etc. If the method does not return anything, we use void keyword.
+
+* Method Name: It is a unique name that is used to define the name of a method. It must be 
+  corresponding to the functionality of the method. Suppose, if we are creating a method for 
+  subtraction of two numbers, the method name must be subtraction(). A method is invoked by its 
+  name.
+
+* Parameter List: It is the list of parameters separated by a comma and enclosed in the pair of 
+  parentheses. It contains the data type and variable name. If the method has no parameter, left 
+  the parentheses blank.
+
+* Method Body: It is a part of the method declaration. It contains all the actions to be performed. 
+  It is enclosed within the pair of curly braces.
+
+
+There is two type of method:-
+1.Static method.
+2.Non-Static method.
+
+
+__________________________________________
+Non-Static Method:-without static keyword
+EXAMPLE:-
+public void fun1()//<-Instance or non-Static method
+{
+	.........................
+}
+Note: To call/invoke the non-static method, we need to create object of respective class.
+_______________________________________________
+Static Method:-with static keyword
+EXAMPLE:-
+public static void fun1()
+{
+	...................
+}
+Note: There is no need to create object or reference variable to call static method,within same class,direct static method call.
+      If you want to call out of the same class,then call static method with class name
+_______________________________________________________________
+
+Instance Method
+-----------------
+The method of the class is known as an instance method. It is a non-static method defined in the class. Before calling or invoking the instance method, it is necessary to create an object of its class. 
+-----------------------------------------------------------
+Let's see an example of an instance method.
+
+class Student
+{
+	Student()
+	{
+		NonStaticMethodExample.msg1();
+	}
+}
+
+public class NonStaticMethodExample
+{
+	public void msg()
+	{
+		System.out.println("Welcome to non-static method msg()");
+	}
+	public static void msg1()
+	{
+		System.out.println("Welcome to static method msg1()");
+	}
+
+	public static void main(String[] args)
+	{
+		NonStaticMethodExample nsme=new NonStaticMethodExample();
+		nsme.msg();
+		
+		msg1();
+		NonStaticMethodExample.msg1();
+
+		Student st=new Student();
+		nsme.msg1();
+		
+	}
+}
+
+
+
+=================================================================================================
+There are two types of instance method:
+------------------------------------------------------------
+1. Accessor Method
+2. Mutator Method
+
+1. Accessor Method: The method(s) that reads the instance variable(s) is known as the accessor method. We can easily identify it because the method is prefixed with the word get. It is also known as getters. It returns the value of the private field. It is used to get the value of the private field.
+
+Example
+
+public int getId()    
+{    
+return Id;    
+}  
+
+2. Mutator Method: The method(s) read the instance variable(s) and also modify the values. We can easily identify it because the method is prefixed with the word set. It is also known as setters or modifiers. It does not return anything. It accepts a parameter of the same data type that depends on the field. It is used to set the value of the private field.
+
+Example
+public void setRoll(int roll)   
+{  
+this.roll = roll;  
+}  
+
+Example of Static and instance block
+----------------------------------------
+class Student
+{
+	{
+		System.out.println("Instance Block");
+	}
+	static
+	{
+		System.out.println("static Block");
+	}
+}
+
+public class InstanceAndStaticBlock
+{
+	static
+	{
+		System.out.println("main static Block");
+	}
+	public static void main(String[] atr)
+	{
+		Student st=new Student();
+	}
+}
+
+________________________________________________________
+Example of static and instance method
+class Student
+{
+	{
+		System.out.println("Instance block");
+	}
+	static
+	{
+		System.out.println("Static block");
+	}
+}
+public class InstanceAndStaticBlock
+{
+	{
+		System.out.println("main instance Block");
+	}
+	static
+	{
+		System.out.println("main static Block");
+	}
+	public static void main(String[] args)
+	{
+		Student st=new Student();
+		InstanceAndStaticBlock s=new InstanceAndStaticBlock();
+	}
+}
+###########################################################         Constructor        ######################################################
+->It is aspecial type of method , which is used to initialize boject.
+->it called when we create a object of the class and constructor name should be the same name of their class.
+	___________There is Two Type of constructor______________
+	ↆ							ↆ
+   1.Default     					 2.parameterized
+public class Student				    public class Student
+{						    {
+	public Student()			    	public Student(String name,int roll)
+	{						{
+		default constructor				parameterized constructor
+	}						}
+}						    }
+
+public class Students
+{
+	String name;
+	public Students(String name)
+	{
+		this.name=name;
+	}
+	
+	public static void main(String[] args)
+	{
+		Students obj1=new Student("Dixit");
+		//Students obj2=new Student(obj1);//wrong due to obj is not a String
+		Students obj3=obj1;
+	}
+}
+
+Students obj1 =obj;
+	  ↆ
+Reference variable is always a variable name difining in creating the object of class
+_________________________________________
+CopyConstructorExample
+class Student
+{
+	String name;
+	int roll;
+	public Student(String n,int r)
+	{
+		name=n;
+		roll=r;
+	}
+	public Student(Student st)
+	{
+		name=st.name;
+		roll=st.roll;
+	}
+}
+
+public class CopyConstructorExample
+{
+	public static void main(String[] args)
+	{
+		Student obj1=new Student("prince",101);
+		Student obj2=new Student(obj1);
+		
+		System.out.println("Obj1 = obj1.name :"+obj1.name);
+		System.out.println("Obj1 = obj1.roll :"+obj1.roll);
+		
+		System.out.println("Obj2 = obj2.name :"+obj2.name);
+		System.out.println("Obj2 = obj2.roll :"+obj2.roll);
+	}
+}
+
+Constructors in Java
+==================================================================================================
+In Java, a constructor is a block of codes similar to the method. It is called when an instance of the class is created. At the time of calling constructor, memory for the object is allocated in the memory.
+
+It is a special type of method which is used to initialize the object.
+
+Every time an object is created using the new() keyword, at least one constructor is called.
+
+It calls a default constructor if there is no constructor available in the class. In such case, Java compiler provides a default constructor by default.
+
+There are two types of constructors in Java: 
+1. no-arg constructor, and 
+2. parameterized constructor.
+
+Note: It is called constructor because it constructs the values at the time of object creation. It is not necessary to write a constructor for a class. It is because java compiler creates a default constructor if your class doesn't have any.
+
+Rules for creating Java constructor
+---------------------------------------------------------------------------------------------------
+There are two rules defined for the constructor.
+--------------------------------------------------------------------------------------------------
+*	Constructor name must be the same as its class name
+*	A Constructor must have no explicit return type
+*	A Java constructor cannot be abstract, static, final, and synchronized
+
+Note: We can use access modifiers while declaring a constructor. It controls the object creation. In other words, we can have private, protected, public or default constructor in Java.
+
+Java Default Constructor
+------------------------------------------------------------------------------------
+A constructor is called "Default Constructor" when it doesn't have any parameter.
+
+Syntax of default constructor:
+----------------------------------
+<class_name>(){}  
+
+Example:
+---------------------------------
+
+
+
+Rule: If there is no constructor in a class, compiler automatically creates a default constructor.
+
+Q) What is the purpose of a default constructor?
+The default constructor is used to provide the default values to the object like 0, null, etc., depending on the type.
+
+
+==================================================================================================
+Java Parameterized Constructor
+--------------------------------------------------------------------------------------------------
+A constructor which has a specific number of parameters is called a parameterized constructor.
+
+Q.Why use the parameterized constructor?
+The parameterized constructor is used to provide different values to distinct objects. However, you can provide the same values also.
+
+Constructor Overloading in Java
+--------------------------------------------------------------------------------------------------
+In Java, a constructor is just like a method but without return type. It can also be overloaded like Java methods.
+
+Constructor overloading in Java is a technique of having more than one constructor with different parameter lists. They are arranged in a way that each constructor performs a different task. They are differentiated by the compiler by the number of parameters in the list and their types.
+
+Example of Constructor Overloading
+-----------------------------------------
+public class ConstructorExample
+{
+	public ConstructorExample()
+	{
+		System.out.println("Default constructor");
+	}
+	public ConstructorExample(String msg)
+	{
+		System.out.println("Parameterized constructor(msg):"+msg);
+	}
+	public ConstructorExample(String name,int roll)
+	{
+		System.out.println("Parameterized constructor(name):"+name+", Roll:"+roll);
+	}
+	public ConstructorExample(int roll)
+	{
+		System.out.println("Parameterized constructor(roll):"+roll);
+	}
+	public static void main(String atr[])
+	{
+		ConstructorExample obj1=new ConstructorExample();//default construtot will be called
+		ConstructorExample obj2=new ConstructorExample("Hello Java");
+		ConstructorExample obj3=new ConstructorExample(101);
+		ConstructorExample obj4=new ConstructorExample("Rishabh",103);
+	}		
+}
+
+
+
+==================================================================================================
+Difference between constructor and method in Java
+==================================================================================================
+Java Constructor				Java Method
+=========================================	==================================================
+A constructor is used to initialize the
+state of an object.				A method is used to expose the behavior of an 
+						object.
+
+A constructor must not have a return type.	A method must have a return type.
+
+The constructor is invoked implicitly.		The method is invoked explicitly.
+
+The Java compiler provides a default 
+constructor if you don't have any 
+constructor in a class.				The method is not provided by the compiler in any 
+						case.
+
+The constructor name must be same as 
+the class name.					The method name may or may not be same as the class 
+						name.
+
+===================================================================================================
+Java Copy Constructor
+---------------------------------
+There is no copy constructor in Java. However, we can copy the values from one object to another like copy constructor in C++.
+
+There are many ways to copy the values of one object into another in Java. They are:
+1. By constructor
+2. By assigning the values of one object into another
+3. By clone() method of Object class
+
+In this example, we are going to copy the values of one object into another using Java constructor.
+---------------------------------------------------------------------------------------------------
+
+
+
+
+Q) Does constructor return any value?
+Yes, it is the current class instance (You cannot use return type yet it returns a value).
+
+Q)Can constructor perform other tasks instead of initialization?
+Yes, like object creation, starting a thread, calling a method, etc. You can perform any operation in the constructor as you perform in the method.
+
+Q) Is there Constructor class in Java?
+Yes.
+
+
+Q) What is the purpose of Constructor class?
+Java provides a Constructor class which can be used to get the internal information of a constructor in the class. It is found in the java.lang.reflect package.
+
+
+===================================================================================================
+					Java static keyword
+===================================================================================================
+The static keyword in Java is used for memory management mainly. We can apply static keyword with variables, methods, blocks and nested classes. The static keyword belongs to the class than an instance of the class.
+
+The static can be:
+------------------------------------------------------------------
+1. Variable (also known as a class variable)
+2. Method (also known as a class method)
+3. Block
+4. Nested class
+Example of static
+------------------------------------------------------------------
+
+
+
+
+
+Q) Why is the Java main method static?
+Ans) It is because the object is not required to call a static method. If it were a non-static method, JVM creates an object first then call main() method that will lead the problem of extra memory allocation.
+
+
+############################################################         Inheritance          ########################################################
+Java Inheritance (Subclass and Superclass)
+in Java, it is possible to inherit attributes and method from one class to another.
+
+we group th "inheritance concept" into two categories:
+	* subclass (child/derived class) - the class that inherits from another class.
+	* superclass(parent/base class) - the class being inherited from derived class.
+
+To inherit from a class, use the extends keyword.
+
+Q.Why and when to use Inheritance ?
+Ans:- Its useful for code reusability: reuse attributes and methods of an existing class when you create a new class.
+__________________________________________________________
+Factors of inheritance:-
+1.Single inheritance
+2.multilevel
+3.hierarchical
+4.hybrid X
+5.multiple X -> by implements keywords
+____________________________________________________
+Type of Inheritance relationship:-
+1.Is-A relationship:- with extends keyword
+Example:-
+class teacher
+{
+	public String getTutorial
+	{
+		return "Black book of java";
+	}
+}
+class Student extends Teachers
+{
+	public static void main(String[] args)
+	{
+		teacher obj= new Student();
+		String book=obj.getTutorial();
+		System.out.println(book);
+	}
+}
+2.Has-A relationship:- without extends keyword
+______________________________________________________
+
+Final keyword:-
+Example:-
+//final class Animal//final class can not be inherited
+class Animal
+{
+	public final void eat()
+	{
+		System.out.println("Eating");
+	}
+}
+//class Dog extends Animal//it will give error for final class of Animal
+class Dog extends Animal
+{
+	public void bark()
+	{
+		System.out.println("Barking");
+	}
+	
+	/*public void eat()//can not overriddenthe final method means final function
+	{
+		
+	}*/
+}
+
+public class FinalKeywordInheritance
+{
+	public static void main(String[] args)
+	{
+		Dog d=new Dog();
+		d.eat();
+		d.bark();
+	}
+}
+
+########################################################    Abstract Class ##########################################################
+in abstract class can be
+	ↆ
+->Abstract class      |->we cant instatiate of abstract class
+->Abstract method     |->we cant provide the bofy of abstract method 
+->Non-Abstract Method |->we can create reference variable of an abstarct class
+->Data member	      |->it can hold the object of child class.  
+->constructor	      |->it can be extended ny child class.
+		      |->if we have abstarct method then we should keep class as abtract,otherwise it will give error.
+_________________________________________________________
+
+Abtract class example:-
+abstract class Printable 
+{
+	String university="LPU";
+	Printable()
+	{
+		System.out.println("Default Consttructor in abstract class.");
+	}
+	abstract void message();
+	public void cube(int num)
+	{
+		System.out.println("Cube of "+num+":"+(num*num*num));
+	}
+}
+//public class AbstractClassExample extends Printable
+public class AbstractClassExample
+{
+	/*public void message()//Overriding message() from abstract class Printable
+	{
+		System.out.println("Invoked Abstarct Method message()");
+	}*/
+	public static void main(String[] args)
+	{
+		//Printable p= new Printable();
+		//p.cube(5);
+		/*Printable p=new AbstractClassExample();
+		p.cube(5);
+		System.out.println("University Name :"+p.university);
+		p.message();*/
+		
+		/*AbstractClassExample ace=new AbstractClassExample();
+		ace.cube(6);
+		System.out.println("University Name :"+ace.university);
+		ace.message();*/
+		
+		Printable p=new Printable()
+		{
+			System.out.println("Anonymous method");
+		};
+		p.message();
+	}
+}
+________________________________________________________________________
+					InterFace In Java
+Interface
+    ↆ
+->constant data member
+->abstarct methods
+->default method with definition
+->Private method with body
+->it will be accessed by child class using implements keyword
+->it can extend another interface
+______________________________________________________________________________________________
+->An interface in Java is a blueprint of class. It has static constants and abstract methods.
+
+->The interface in Java is a mechanism to achieve abstraction.There can be only abtract method
+  in the Java interface,not method body.It is used to achieve abstraction and multiple inheritance in Java.
+
+->In other words , you can say that interface can have abstract methods and variables. It cannot have a method body.
+
+->Java Interface also represents the IS-A relationship.
+  It cannot be instantiated just like the abstract class.
+
+->Since Java 8,we can have default and static method in an interface.
+
+Rule:-
+Whatever abstract method keeping in interface,All abstract method required to implement in child class
+_________________________________________________________________________________________
+=============================================================================================================
+					Abstraction in Java
+=============================================================================================================
+Abstraction is a process of hiding the implementation details and showing only functionality to the user.
+Another way, it shows only essential things to the user and hides the internal details, for example, sending SMS where you type the text and send the message. You don't know the internal processing about the message delivery.
+
+Abstraction lets you focus on what the object does instead of how it does it.
+Ways to achieve Abstraction
+-----------------------------------------------------------------
+There are two ways to achieve abstraction in java
+-----------------------------------------------------------------
+* Abstract class (0 to 100%)
+* Interface (100%)
+
+Abstract class in Java
+-------------------------------------------
+A class which is declared as abstract is known as an abstract class. It can have abstract and non-abstract methods. It needs to be extended and its method implemented. It cannot be instantiated.
+
+Rules:
+---------------------------------------------------------
+* An abstract class must be declared with an abstract keyword.
+* It can have abstract and non-abstract methods.
+* It cannot be instantiated.
+* It can have constructors and static methods also.
+* It can have final methods which will force the subclass not to change the body of the method.
+
+Example of abstract class
+-------------------------------
+abstract class A{}  
+
+Abstract Method in Java
+-------------------------------
+A method which is declared as abstract and does not have implementation is known as an abstract method.
+
+Example of abstract method
+-----------------------------
+abstract void printStatus();//no method body and abstract  
+
+Example of Abstract class that has an abstract method
+In this example, Bike is an abstract class that contains only one abstract method run. Its implementation is provided by the Honda class.
+
+abstract class Bike
+{  
+  abstract void run();  
+}  
+class Honda4 extends Bike
+{  
+void run()
+{
+	System.out.println("running safely");
+}  
+public static void main(String args[])
+{  
+ Bike obj = new Honda4();  
+ obj.run();  
+}  
+}  
+
+Understanding the real scenario of Abstract class
+-------------------------------------------------------
+In this example, Shape is the abstract class, and its implementation is provided by the Rectangle and Circle classes.
+
+Mostly, we don't know about the implementation class (which is hidden to the end user), and an object of the implementation class is provided by the factory method.
+
+A factory method is a method that returns the instance of the class. We will learn about the factory method later.
+
+In this example, if you create the instance of Rectangle class, draw() method of Rectangle class will be invoked.
+
+File: TestAbstraction1.java
+
+abstract class Shape
+{  
+abstract void draw();  
+}  
+//In real scenario, implementation is provided by others i.e. unknown by end user  
+class Rectangle extends Shape
+{  
+void draw(){System.out.println("drawing rectangle");}  
+}  
+class Circle1 extends Shape
+{  
+void draw(){System.out.println("drawing circle");}  
+}  
+//In real scenario, method is called by programmer or user  
+class TestAbstraction1{  
+public static void main(String args[]){  
+Shape s=new Circle1();//In a real scenario, object is provided through method, e.g., getShape() method  
+s.draw();  
+}  
+}  
+
+Abstract class having constructor, data member and methods
+------------------------------------------------------------------
+An abstract class can have a data member, abstract method, method body (non-abstract method), constructor, and even main() method.
+
+File: TestAbstraction2.java
+
+//Example of an abstract class that has abstract and non-abstract methods  
+ abstract class Bike{  
+   Bike(){System.out.println("bike is created");}  
+   abstract void run();  
+   void changeGear(){System.out.println("gear changed");}  
+ }  
+//Creating a Child class which inherits Abstract class  
+ class Honda extends Bike{  
+ void run(){System.out.println("running safely..");}  
+ }  
+//Creating a Test class which calls abstract and non-abstract methods  
+ class TestAbstraction2{  
+ public static void main(String args[]){  
+  Bike obj = new Honda();  
+  obj.run();  
+  obj.changeGear();  
+ }  
+}  
+
+Rule: If there is an abstract method in a class, that class must be abstract.
+Class Example:
+abstract class Printable
+{
+	String university="LPU";
+	public Printable()
+	{
+		System.out.println("Default Constructor in abstract class.");
+	}
+	abstract void message();
+	public void cube(int num)
+	{
+		System.out.println("Cube of "+num+": "+(num*num*num));
+	}
+}
+//public class AbstractClassExample extends Printable
+public class AbstractClassExample
+{
+	/*public void message()//Overriding message() from abstract class Printable
+	{
+		System.out.println("Invoiked Abstract Method message()");
+	}*/
+	public static void main(String[] args)
+	{
+		//Printable p=new Printable();//Error
+		//p.cube(5);
+		/*
+		Printable p=new AbstractClassExample();
+		p.cube(5);
+		System.out.println("University Name :"+p.university);
+		p.message();
+		*/
+
+		/*
+		AbstractClassExample ace=new AbstractClassExample();
+		ace.cube(6);
+		System.out.println("University Name :"+ace.university);
+		ace.message();
+		*/
+
+		Printable p=new Printable()//Anonymous class//inner class
+		{
+			public void message()
+			{
+			System.out.println("Anonymous method");
+			}
+		};
+		p.message();
+		
+	}	
+}
+
+Example2:
+-----------------------
+abstract class Vehicle
+{
+	abstract void changeGear();
+	abstract void run();
+	abstract void blowHorn();	
+}
+
+class Car extends Vehicle
+{
+	public void changeGear()
+	{
+		System.out.println("Change gear");
+	}
+	public void run()
+	{
+		System.out.println("Start Car");
+	}
+	public void blowHorn()
+	{
+		System.out.println("Blow Horn");
+	}
+}
+class Bike extends Vehicle
+{
+	public void changeGear()
+	{
+		System.out.println("Change gear");
+	}
+	public void run()
+	{
+		System.out.println("Start Bike");
+	}
+	public void blowHorn()
+	{
+		System.out.println("Blow Horn");
+	}
+}
+
+
+public class Test
+{
+	public static void main(String[] args)
+	{
+		Vehicle v=new Car();
+		 v.run();
+		 v.blowHorn();
+		 v.changeGear();
+
+		v=new Bike();
+		 v.run();
+		 v.blowHorn();
+		 v.changeGear();
+
+	}
+}
+=============================================================================================================
+Interface in Java
+=============================================================================================================
+An interface in Java is a blueprint of a class. It has static constants and abstract methods.
+
+The interface in Java is a mechanism to achieve abstraction. There can be only abstract methods in the Java interface, not method body. It is used to achieve abstraction and multiple inheritance in Java.
+
+In other words, you can say that interfaces can have abstract methods and variables. It cannot have a method body.
+
+Java Interface also represents the IS-A relationship.
+It cannot be instantiated just like the abstract class.
+
+Since Java 8, we can have default and static methods in an interface.
+
+Since Java 9, we can have private methods in an interface.
+
+-------------------------------------------------------------------------------------------------------------
+Why use Java interface?
+There are mainly three reasons to use interface. They are given below.
+-------------------------------------------------------------------------------------------------------------
+* It is used to achieve abstraction.
+* By interface, we can support the functionality of multiple inheritance.
+* It can be used to achieve loose coupling.
+
+How to declare an interface?
+------------------------------------------------------------------------------------------------------------
+An interface is declared by using the interface keyword. It provides total abstraction; means all the methods in an interface are declared with the empty body, and all the fields are public, static and final by default. A class that implements an interface must implement all the methods declared in the interface.
+
+Syntax:
+interface <interface_name>{  
+      
+    // declare constant fields  
+    // declare methods that abstract   
+    // by default.  
+}  
+
+Java Interface Example: Bank
+---------------------------------------------------------------------------------------------------------
+Let's see another example of java interface which provides the implementation of Bank interface.
+
+interface Bank{  
+float rateOfInterest();  
+}  
+class SBI implements Bank{  
+public float rateOfInterest(){return 9.15f;}  
+}  
+class PNB implements Bank{  
+public float rateOfInterest(){return 9.7f;}  
+}  
+class TestInterface2{  
+public static void main(String[] args){  
+Bank b=new SBI();  
+System.out.println("ROI: "+b.rateOfInterest());  
+}}  
+
+
+Multiple inheritance in Java by interface
+--------------------------------------------------------------------------------------------------------
+If a class implements multiple interfaces, or an interface extends multiple interfaces, it is known as multiple inheritance.
+
+interface Printable{  
+void print();  
+}  
+interface Showable{  
+void show();  
+}  
+class A7 implements Printable,Showable{  
+public void print(){System.out.println("Hello");}  
+public void show(){System.out.println("Welcome");}  
+  
+public static void main(String args[]){  
+A7 obj = new A7();  
+obj.print();  
+obj.show();  
+ }  
+}  
+Class Example:
+----------------------------------------
+interface Drawable
+{
+	int side=10;//static constant data member
+	abstract void draw();
+	void show();
+}
+class Rectangle implements Drawable
+{
+	public void draw()
+	{
+		System.out.println("Draw Rectangle");
+	}
+	public void show()
+	{
+		System.out.println("Show rectangle");
+	}
+}
+public class InterrfaceExample
+{
+	public static void main(String[] args)
+	{
+		Drawable d=new Rectangle();
+		d.draw();
+		d.show();
+		System.out.println("Side :"+d.side);
+	}
+}
+
+
+Example2:
+-------------------------------------
+interface Printable
+{
+	void fun1();
+	void fun2();
+	void fun3();
+}
+class InterfaceExample2 implements Printable
+{
+	public void fun1()
+	{
+		System.out.println("Fun1() invoked");
+	}
+	public void fun2()
+	{
+		//System.out.println("Fun2() invoked");
+	}
+	public void fun3()
+	{
+		//System.out.println("Fun3() invoked");
+	}
+
+	public static void main(String[] args)
+	{
+		Printable p=new InterfaceExample2();
+		p.fun1();
+		p.fun2();
+		p.fun3();
+	}
+}
+
+Example3:
+----------------------------------------------------
+interface Printable
+{
+	void fun1();
+	
+}
+class InterfaceExample3
+{
+	public static void main(String[] args)
+	{
+		Printable p=new Printable()
+		{
+			public void fun1()
+			{
+				System.out.println("fun1() is invoked");
+			}
+		};
+		p.fun1();
+
+		//lambda expression
+		Printable p2=()->{
+			System.out.println("Lambda");
+		};
+		p2.fun1();
+
+	}
+} 
+
+
+
+Q) Multiple inheritance is not supported through class in java, but it is possible by an interface, why?
+As we have explained in the inheritance chapter, multiple inheritance is not supported in the case of class because of ambiguity. However, it is supported in case of an interface because there is no ambiguity. It is because its implementation is provided by the implementation class.
+
+Interface inheritance
+--------------------------------------------------------------------------------
+A class implements an interface, but one interface extends another interface.
+
+interface Printable{  
+void print();  
+}  
+interface Showable extends Printable{  
+void show();  
+}  
+class TestInterface4 implements Showable{  
+public void print(){System.out.println("Hello");}  
+public void show(){System.out.println("Welcome");}  
+  
+public static void main(String args[]){  
+TestInterface4 obj = new TestInterface4();  
+obj.print();  
+obj.show();  
+ }  
+}  
+
+Java 8 Default Method in Interface
+Since Java 8, we can have method body in interface. But we need to make it default method. 
+
+Let's see an example:
+
+interface Drawable{  
+void draw();  
+default void msg(){System.out.println("default method");}  
+}  
+class Rectangle implements Drawable{  
+public void draw(){System.out.println("drawing rectangle");}  
+}  
+class TestInterfaceDefault{  
+public static void main(String args[]){  
+Drawable d=new Rectangle();  
+d.draw();  
+d.msg();  
+}}  
+
+
+Java 8 Static Method in Interface
+------------------------------------------------------------------------------------------------------
+Since Java 8, we can have static method in interface. 
+
+Let's see an example:
+---------------------------------
+interface Drawable{  
+void draw();  
+static int cube(int x){return x*x*x;}  
+}  
+class Rectangle implements Drawable{  
+public void draw(){System.out.println("drawing rectangle");}  
+}  
+  
+class TestInterfaceStatic{  
+public static void main(String args[]){  
+Drawable d=new Rectangle();  
+d.draw();  
+System.out.println(Drawable.cube(3));  
+}}  
+
+Class Example:
+-----------------------------------
+interface Printable
+{
+	void print();
+}
+interface Drawable
+{
+	void draw();
+}
+
+class Rectangle implements Printable,Drawable
+{
+	public void print()
+	{
+		System.out.println("Print Rectangle");
+	}
+	public void draw()
+	{
+		System.out.println("Draw rectangle");
+	}
+}
+
+public class MupltipleInheritanceExample
+{
+	public static void main(String[] args)
+	{
+		/*
+		Printable p=new Rectangle();
+		p.print();
+		p.draw();
+		*/
+		Rectangle r=new Rectangle();
+		r.print();
+		r.draw();
+
+	}
+}
+
+
+Class Example of Loose Coupling with factory pattern
+--------------------------------------------------------
+import java.util.*;
+
+interface Bank
+{
+	public double getRate();
+}
+class SBI implements Bank
+{
+	public double getRate()
+	{
+		return 6.25;
+	}
+}
+class ICICI implements Bank
+{
+	public double getRate()
+	{
+		return 7.20;
+	}
+}
+class HDFC implements Bank
+{
+	public double getRate()
+	{
+		return 9.50;
+	}
+}
+
+public class FactoryDesignPatternWithInterface
+{
+	public static void main(String[] args)
+	{
+		Bank b;
+		Scanner input=new Scanner(System.in);
+
+		System.out.println("Enter bank name:");
+		String bname=input.nextLine();
+
+		if(bname.equalsIgnoreCase("SBI"))
+		{
+			b=new SBI();
+			System.out.println("SBI bank rate :"+b.getRate());
+		}
+		else if(bname.equalsIgnoreCase("ICICI"))
+		{
+			b=new ICICI();
+			System.out.println("ICICI bank rate :"+b.getRate());
+		}
+		else if(bname.equalsIgnoreCase("HDFC"))
+		{
+			b=new HDFC();
+			System.out.println("HDFC bank rate :"+b.getRate());
+		}
+		else
+		{
+			System.out.println("Wrong bank name.");
+		}
+
+	}	
+}
+
+Q) What is marker or tagged interface?
+-------------------------------------------------------------
+An interface which has no member is known as a marker or tagged interface, for example, Serializable, Cloneable, Remote, etc. They are used to provide some essential information to the JVM so that JVM may perform some useful operation.
+
+//How Serializable interface is written?  
+public interface Serializable{  
+}  
+
+==============================================================================================================
+Difference between abstract class and interface
+==============================================================================================================
+1) Abstract class can have abstract and non-abstract methods.	
+	Interface can have only abstract methods. Since Java 8, it can have default and static methods also.
+2) Abstract class doesn't support multiple inheritance.	
+	Interface supports multiple inheritance.
+3) Abstract class can have final, non-final, static and non-static variables.	
+	Interface has only static and final variables.
+4) Abstract class can provide the implementation of interface.	
+	Interface can't provide the implementation of abstract class.
+5) The abstract keyword is used to declare abstract class.	
+	The interface keyword is used to declare interface.
+6) An abstract class can extend another Java class and implement multiple Java interfaces.	
+	An interface can extend another Java interface only.
+7) An abstract class can be extended using keyword "extends".	
+	An interface can be implemented using keyword "implements".
+8) A Java abstract class can have class members like private, protected, etc.	
+	Members of a Java interface are public by default.
+9)Example:
+public abstract class Shape{
+public abstract void draw();
+}	
+
+Example:
+public interface Drawable{
+void draw();
+}
+
+
+==============================================================================================================
+					Encapsulation in Java
+==============================================================================================================
+Encapsulation in Java is a process of wrapping code and data together into a single unit, for example, a capsule which is mixed of several medicines.
+
+We can create a fully encapsulated class in Java by making all the data members of the class private. Now we can use setter and getter methods to set and get the data in it.
+
+The Java Bean class is the example of a fully encapsulated class.
+
+
+Advantage of Encapsulation in Java
+-------------------------------------------------------------
+By providing only a setter or getter method, you can make the class read-only or write-only. In other words, you can skip the getter or setter methods.
+
+It provides you the control over the data. Suppose you want to set the value of id which should be greater than 100 only, you can write the logic inside the setter method. You can write the logic not to store the negative numbers in the setter methods.
+
+It is a way to achieve data hiding in Java because other class will not be able to access the data through the private data members.
+
+The encapsulate class is easy to test. So, it is better for unit testing.
+
+The standard IDE's are providing the facility to generate the getters and setters. So, it is easy and fast to create an encapsulated class in Java.
+
+Simple Example of Encapsulation in Java
+Let's see the simple example of encapsulation that has only one field with its setter and getter methods.
+
+File: Student.java
+
+//A Java class which is a fully encapsulated class.  
+//It has a private data member and getter and setter methods.  
+package com.lpu;  
+public class Student{  
+//private data member  
+private String name;  
+//getter method for name  
+public String getName(){  
+return name;  
+}  
+//setter method for name  
+public void setName(String name){  
+this.name=name  
+}  
+}  
+File: Test.java
+
+//A Java class to test the encapsulated class.  
+package com.lpu;  
+class Test{  
+public static void main(String[] args){  
+//creating instance of the encapsulated class  
+Student s=new Student();  
+//setting value in the name member  
+s.setName("vijay");  
+//getting value of the name member  
+System.out.println(s.getName());  
+}  
+}  
+
+Class Example:
+-------------------------------------
+class User 
+{
+private String name,contact,email;
+private int userid;
+
+    public User() {
+    }
+
+    public User(String name, String contact, String email, int userid) {
+        this.name = name;
+        this.contact = contact;
+        this.email = email;
+        this.userid = userid;
+    }
+
+    
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public int getUserid() {
+        return userid;
+    }
+
+    public void setUserid(int userid) {
+        this.userid = userid;
+    } 
+    
+}
+public class EncapsulateExample
+{
+	public static void main(String[] args)
+	{
+		User u=new User();
+		u.setUserid(1001);
+		u.setName("Mohan Kumar");
+		u.setContact("9743496260");
+		u.setEmail("pk@gmail.com");
+
+		
+		System.out.println("User Id:"+u.getUserid());
+		System.out.println("User Contact:"+u.getContact());
+		System.out.println("User Name:"+u.getName());
+		System.out.println("User Email:"+u.getEmail());
+
+	}
+}
+
+=============================================================================================================
+					Exception Handling in Java
+=============================================================================================================
+Exception Handling in Java is one of the effective means to handle the runtime errors so that the regular flow of the application can be preserved. Java Exception Handling is a mechanism to handle runtime errors such as ClassNotFoundException, IOException, SQLException, RemoteException, etc.
+
+Exception is an unwanted or unexpected event, which occurs during the execution of a program, i.e. at run time, that disrupts the normal flow of the program’s instructions. Exceptions can be caught and handled by the program. When an exception occurs within a method, it creates an object. This object is called the exception object. It contains information about the exception, such as the name and description of the exception and the state of the program when the exception occurred.
+
+Major reasons why an exception Occurs
+===================================================
+* Invalid user input
+* Device failure
+* Loss of network connection
+* Physical limitations (out of disk memory)
+* Code errors
+* Opening an unavailable file
+
+Errors represent irrecoverable conditions such as Java virtual machine (JVM) running out of memory, memory leaks, stack overflow errors, library incompatibility, infinite recursion, etc. Errors are usually beyond the control of the programmer, and we should not try to handle errors.
+
+Let us discuss the most important part which is the differences between Error and Exception 
+that is as follows: 
+* Error: An Error indicates a serious problem that a reasonable application should not try to catch.
+* Exception: Exception indicates conditions that a reasonable application might try to catch.
+
+Exception Hierarchy
+-----------------------------------------
+All exception and error types are subclasses of class Throwable, which is the base class of the hierarchy. One branch is headed by Exception. This class is used for exceptional conditions that user programs should catch. NullPointerException is an example of such an exception. Another branch, Error is used by the Java run-time system(JVM) to indicate errors having to do with the run-time environment itself(JRE). StackOverflowError is an example of such an error.
+------------------------------------------------------------------------------------------
+* Object
+	* Throwable
+		* Exception
+			* Checked Exception
+			* Un-checked Exception
+		* Error
+			* Virtual Machine Error
+			* Assertion Error
+
+---------------------------------------------------------------------------------------------
+Types of Exceptions 
+==============================================================================================================
+Java defines several types of exceptions that relate to its various class libraries. Java also allows users to define their own exceptions.
+
+Exceptions can be categorized in two ways:
+1. Built-in Exceptions
+	* Checked Exception
+	* Unchecked Exception 
+2. User-Defined Exceptions
+
+1. Built-in Exceptions:
+Built-in exceptions are the exceptions that are available in Java libraries. These exceptions are suitable to explain certain error situations.
+
+* Checked Exceptions: Checked exceptions are called compile-time exceptions because these exceptions are checked at compile-time by the compiler.
+ 
+* Unchecked Exceptions: The unchecked exceptions are just opposite to the checked exceptions. The compiler will not check these exceptions at compile time. In simple words, if a program throws an unchecked exception, and even if we didn’t handle or declare it, the program would not give a compilation error.
+
+
+2. User-Defined Exceptions:
+Sometimes, the built-in exceptions in Java are not able to describe a certain situation. In such cases, users can also create exceptions, which are called ‘user-defined Exceptions’. 
+
+
+The advantages of Exception Handling in Java are as follows:
+------------------------------------------------------------------------------------------
+* Provision to Complete Program Execution
+* Easy Identification of Program Code and Error-Handling Code
+* Propagation of Errors
+* Meaningful Error Reporting
+* Identifying Error Types
+
+Methods to print the Exception information:
+--------------------------------------------------------------------------------------------
+1.printStackTrace()– This method prints exception information in the format of Name of the exception: description of the exception, stacktrace.
+Example:
+import java.io.*;
+ 
+class LPU {
+    public static void main (String[] args) {
+      int a=5;
+      int b=0;
+        try{
+          System.out.println(a/b);
+        }
+      catch(ArithmeticException e){
+        e.printStackTrace();
+      }
+    }
+}
+
+Output:
+
+java.lang.ArithmeticException: / by zero
+at LPU.main(File.java:10)
+
+2.toString() – This method prints exception information in the format of Name of the exception: description of the exception.
+
+import java.io.*;
+ 
+class LPU1 {
+    public static void main (String[] args) {
+      int a=5;
+      int b=0;
+        try{
+          System.out.println(a/b);
+        }
+      catch(ArithmeticException e){
+        System.out.println(e.toString());
+      }
+    }
+}
+
+
+Output:
+java.lang.ArithmeticException: / by zero
+
+3.getMessage() -This method prints only the description of the exception.
+
+//program to print the exception information using getMessage() method
+ 
+import java.io.*;
+ 
+class LPU1 {
+    public static void main (String[] args) {
+      int a=5;
+      int b=0;
+        try{
+          System.out.println(a/b);
+        }
+      catch(ArithmeticException e){
+        System.out.println(e.getMessage());
+      }
+    }
+}
+
+
+Output:
+/ by zero
+
+Class example :
+-------------------------
+public class ExceptionHandling1
+{
+	public static void main(String[] args)
+	{
+		int a=5;
+		int b=0;
+		int res=a/b;//ArithmeticException->Runtime exception
+		System.out.println("res :"+res);
+
+		String name=null;
+		int len=name.length();//NullPointerException
+		System.out.println("Len :"+len);
+	}
+}
+
+
+
+
+
+
+=============================================================================================================
+					How Does JVM handle an Exception?
+=============================================================================================================
+Default Exception Handling: Whenever inside a method, if an exception has occurred, the method creates an Object known as an Exception Object and hands it off to the run-time system(JVM). The exception object contains the name and description of the exception and the current state of the program where the exception has occurred. Creating the Exception Object and handling it in the run-time system is called throwing an Exception. There might be a list of the methods that had been called to get to the method where an exception occurred. This ordered list of the methods is called Call Stack. Now the following procedure will happen. 
+
+The run-time system searches the call stack to find the method that contains a block of code that can handle the occurred exception. The block of the code is called an Exception handler.
+The run-time system starts searching from the method in which the exception occurred, and proceeds through the call stack in the reverse order in which methods were called.
+
+If it finds an appropriate handler, then it passes the occurred exception to it. An appropriate handler means the type of the exception object thrown matches the type of the exception object it can handle.
+
+If the run-time system searches all the methods on the call stack and couldn’t have found the appropriate handler, then the run-time system handover the Exception Object to the default exception handler, which is part of the run-time system. This handler prints the exception information in the following format and terminates the program abnormally.
+
+How to handle the exception:
+we can handle the exception by using try,catch and finally block/keyword.
+In which code,there is possiblity to raise exception that code will keep inside try block.
+
+After raising the exception from try block. catch block will catch the exception.
+-------------------------------------------------------------------------------------------------
+Example:
+------------------
+sequence of try ..catch and finally
+try
+{
+
+}
+catch(Exception e){}
+finally{}
+
+try
+{}
+catch(Exception e){}
+
+try
+{}
+finally
+{}
+
+
+public class ExceptionHandling1
+{
+	public static void main(String[] args)
+	{
+		
+		try
+		{
+			String name=null;
+			int len=name.length();
+		}
+		finally
+		{
+			System.out.println("Hello finally");
+		}
+		/*
+		catch(NullPointerException e)
+		{
+			//System.out.println(e.getMessage());
+			//System.out.println("Content is empty");
+			//e.printStackTrace();//it will print complete info
+			//System.out.println(e.toString());// it will show exception's name and message
+			//System.out.println(e.getMessage());//it will show only message
+			System.out.println("Content is empty");//user define message
+		}
+		*/
+	
+	}
+}
+==========================================================================================================================
+					Collection framework
+==========================================================================================================================
+Any group of individual objects which are represented as a single unit is know as a collection of objects. In Java, a seprate framework named the "Collection Framework"
+has been defined in jdk1.2 which holds all the collection classes and interface in it.
+
+In java, Collection interface (java.util.Collection) and Map interface(java.util.Map) are the two main "root" interfaces of Java collection classes.
+
+What is framework in Java
+*It provides readymade architecture.
+*It represents a set of classes and interface.
+*It is optional.
+
+Hierarchy of Collection Framework
+======================================
+Let us see the hierarchy of collection framework. The java.util package contains all the classes and interfaces for the Collection framework.
+
+=>Iterable
+	=>Collection
+		1.List
+		   a. ArrayList
+		   b. LinkedList
+		   c. Vector
+		   d. Stack
+
+->Collection Framework:Its a data structure->collection of java class and interfaces
+
+
+										  |Collection|interface
+											ↆ
+										  |Iterable|interface
+________________________________________________________________________________________ↆ______________________________________________________________________________
+		ↆ									ↆ								ↆ
+		ↆ									ↆ								ↆ
+    interface|List|								    |Queue|interface						   |Set|interface
+	a.ArrayList(class)								a.priority queue(class)						a.HashSet
+	b.LinkedList(class)								b.Dequeue(interface Array Dequeue)				b.Linkid aset
+	c.Vector(class)																	c.TreeSet class
+	d.Stack(class)																	d.SortedSet(interface)
+
+==========================================================================================================================================================================================
+								Java LinkedList class
+==========================================================================================================================================================================================

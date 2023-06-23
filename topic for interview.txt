@@ -1,0 +1,18 @@
+->String/String buffer/String Builder.
+->inheritance /multiple inheritance//in a multiple inheritance abstract and interfaces.
+->reversing and frequency coding questions.
+->Polymorphis->meethod hidden in overridden and method hidden in overloading.
+->Abstraction and encapulations.
+->collections
+	ↆ
+    ->ArrayList
+    ->LinkedList
+    ->vector
+    ->stack
+->Tree set
+->Hash set// tree set and hash set programming also
+->Map//programmingalso be there
+    ↆ
+  ->Hash Map
+  ->Hash table
+  ->tree map
